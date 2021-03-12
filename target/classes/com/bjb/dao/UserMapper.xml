@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjb.dao.UserDao">
+
+    <insert id="addUser" parameterType="com.bjb.entity.User">
+		<selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userCode != null">
+				userCode,
+			</if>
+			<if test="password != null and password != ''">
+				password,
+			</if>
+			<if test="roleId != null">
+				roleId,
+			</if>
+			<if test="creatDate != null">
+				creatDate,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="userName != null">
+				userName,
+			</if>
+			<if test="mobilePhone != null">
+				mobilePhone,
+			</if>
+			<if test="identification != null">
+				identification,
+			</if>
+			<if test="provinceCode != null">
+				provinceCode,
+			</if>
+			<if test="cityCode != null">
+				cityCode,
+			</if>
+			<if test="countyCode != null">
+				countyCode,
+			</if>
+			<if test="provinceName != null">
+				provinceName,
+			</if>
+			<if test="cityName != null">
+				cityName,
+			</if>
+			<if test="countyName != null">
+				countyName,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="auditStatus != null">
+				auditStatus,
+			</if>
+			<if test="idMd5 != null">
+				idMd5,
+			</if>
+			<if test="activeStatus != null">
+				activeStatus,
+			</if>
+			<if test="identity != null">
+				identity,
+			</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userCode != null">
+				#{userCode,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null and password != ''">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				#{roleId,jdbcType=INTEGER},
+			</if>
+			<if test="creatDate != null">
+				#{creatDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="mobilePhone != null">
+				#{mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="identification != null">
+				#{identification,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceCode != null">
+				#{provinceCode,jdbcType=INTEGER},
+			</if>
+			<if test="cityCode != null">
+				#{cityCode,jdbcType=INTEGER},
+			</if>
+			<if test="countyCode != null">
+				#{countyCode,jdbcType=INTEGER},
+			</if>
+			<if test="provinceName != null">
+				#{provinceName, jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				#{cityName, jdbcType=VARCHAR},
+			</if>
+			<if test="countyName != null">
+				#{countyName, jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="auditStatus != null">
+				#{auditStatus,jdbcType=INTEGER},
+			</if>
+			<if test="idMd5 != null">
+				#{idMd5,jdbcType=VARCHAR},
+			</if>
+			<if test="activeStatus != null">
+				#{activeStatus, jdbcType=INTEGER},
+			</if>
+			<if test="identity != null">
+				#{identity, jdbcType=INTEGER},
+			</if>
+        </trim>
+    </insert>
+
+</mapper>

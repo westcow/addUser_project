@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjb.dao.VolunteerDao">
+    <insert id="insertVolunteer" parameterType="com.bjb.entity.Volunteer">
+        <selectKey keyProperty="volunteerId" order="AFTER" resultType="java.lang.Integer">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+        insert into volunteer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="createTime != null">
+				createTime,
+			</if>
+            <if test="volunteerNo != null">
+				volunteerNo,
+			</if>
+            <if test="serviceProvinceCode != null">
+                serviceProvinceCode,
+            </if>
+            <if test="serviceCityCode != null">
+                serviceCityCode,
+            </if>
+            <if test="serviceCountyCode != null">
+                serviceCountyCode,
+            </if>
+            <if test="serviceProvinceName != null">
+                serviceProvinceName,
+            </if>
+            <if test="serviceCityName != null">
+                serviceCityName,
+            </if>
+            <if test="serviceCountyName != null">
+                serviceCountyName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+            <if test="volunteerNo != null">
+				#{volunteerNo,jdbcType=VARCHAR},
+			</if>
+            <if test="serviceProvinceCode != null">
+                #{serviceProvinceCode,jdbcType=INTEGER},
+            </if>
+            <if test="serviceCityCode != null">
+                #{serviceCityCode,jdbcType=INTEGER},
+            </if>
+            <if test="serviceCountyCode != null">
+                #{serviceCountyCode,jdbcType=INTEGER},
+            </if>
+            <if test="serviceProvinceName != null">
+                #{serviceProvinceName, jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCityName != null">
+                #{serviceCityName, jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCountyName != null">
+                #{serviceCountyName, jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

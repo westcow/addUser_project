@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjb.dao.AreaDao">
+
+    <select id="getAreaListBySuperiorCode" parameterType="java.lang.Integer" resultType="com.bjb.entity.Area">
+        select areaCode, areaName from area where superiorCode=#{superiorCode}
+    </select>
+
+    <select id="getAreaByAreaCode" parameterType="java.lang.Integer" resultType="com.bjb.entity.Area">
+        select areaCode, areaName from area where areaCode=#{areaCode}
+    </select>
+</mapper>
