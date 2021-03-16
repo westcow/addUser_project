@@ -4,13 +4,13 @@ import com.bjb.dao.AreaDao;
 import com.bjb.dao.UserDao;
 import com.bjb.dao.VolunteerDao;
 import com.bjb.entity.Area;
+import com.bjb.entity.SuperName;
 import com.bjb.entity.User;
 import com.bjb.entity.Volunteer;
 import com.bjb.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,31 +24,33 @@ import java.util.*;
  * @Version
  */
 public class addUser {
-//    public static void main(String[] args) {
+    //    public static void main(String[] args) {
     public static void add() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User user = new User();
-        user.setUserCode(UUID.randomUUID().toString().replaceAll("-",""));
-        String userName = getUserName();
+        user.setUserCode(UUID.randomUUID().toString().replaceAll("-", ""));
+        String IDNum = getIdentification();
+        System.out.println("身份证号：" + IDNum);
+        user.setGender(gender(IDNum));
+        System.out.println("性别：" + user.getGender());
+        String userName = getUserName(user.getGender());
         user.setUserName(userName);
+        System.out.println("姓名：" + user.getUserName());
         user.setRoleId(10);
         user.setCreatDate(new Date());
         user.setPassword(IDMd5("a123456789"));
-        String mobile = getPhone();
-        user.setMobilePhone(mobile);
         user.setProvinceCode(52);
         user.setCityCode(getAreaBySuper(user.getProvinceCode()).getAreaCode());
         user.setCountyCode(getAreaBySuper(user.getCityCode()).getAreaCode());
         user.setProvinceName(getAreaByCode(user.getProvinceCode()).getAreaName());
         user.setCityName(getAreaBySuper(user.getProvinceCode()).getAreaName());
         user.setCountyName(getAreaBySuper(user.getCityCode()).getAreaName());
-        String IDNum = getIdentification(user.getCityName());
-        user.setIdentification(IDNum);
-        user.setGender(gender(IDNum));
+        System.out.println("城市名：" + user.getCityName());
+        user.setIdentification(new StringBuilder(IDNum).replace(6,14, "********").toString());
         user.setStatus(1);
         user.setAuditStatus(1);
-        user.setIdMd5(IDMd5(IDNum));
+        user.setIdMd5(IDMd5(IDNum).substring(0, 16));
         user.setActiveStatus(1);
         user.setIdentity(2);
         userDao.addUser(user);
@@ -70,7 +72,7 @@ public class addUser {
         byte[] secretBytes = null;
         try {
             secretBytes = MessageDigest.getInstance("md5").digest(
-                    IDNum.getBytes());
+                IDNum.getBytes());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("没有这个md5算法！");
         }
@@ -95,254 +97,154 @@ public class addUser {
         return areaDao.getAreaByAreaCode(areaCode);
     }
 
-    private static String getUserName() {
+    private static String getUserName(String gender) {
         /*
         李 王 张 刘 陈 杨 赵 黄
         周 吴 徐 孙 胡 朱 高 林
         何 郭 马 罗 梁 宋 郑
          */
-        String userName;
         String surname = null;
-        Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(199, "李");
-        map.put(389 ,"王");
-        map.put(569 ,"张");
-        map.put(739 ,"刘");
-        map.put(899 ,"陈");
-        map.put(1049 ,"杨");
-        map.put(1189 ,"赵");
-        map.put(1319 ,"黄");
-        map.put(1439 ,"周");
-        map.put(1549 ,"吴");
-        map.put(1639 ,"徐");
-        map.put(1739 ,"孙");
-        map.put(1819 ,"胡");
-        map.put(1889 ,"朱");
-        map.put(1949 ,"高");
-        map.put(1999 ,"林");
-        map.put(2039 ,"何");
-        map.put(2069 ,"郭");
-        map.put(2089 ,"马");
-        map.put(2099 ,"罗");
-        map.put(2109 ,"梁");
-        map.put(2119 ,"宋");
-        map.put(2129 ,"郑");
-        Random random = new Random();
-        int num = random.nextInt(2130);
-        if (num <= 199) {
-            surname = map.get(199);
-        } else if (num <= 389) {
-            surname = map.get(389);
-        } else if (num <= 569) {
-            surname = map.get(569);
-        } else if (num <= 739) {
-            surname = map.get(739);
-        } else if (num <= 899) {
-            surname = map.get(899);
-        } else if (num <= 1049) {
-            surname = map.get(1049);
-        } else if (num <= 1189) {
-            surname = map.get(1189);
-        } else if (num <= 1319) {
-            surname = map.get(1319);
-        } else if (num <= 1439) {
-            surname = map.get(1439);
-        } else if (num <= 1549) {
-            surname = map.get(1549);
-        } else if (num <= 1639) {
-            surname = map.get(1639);
-        } else if (num <= 1739) {
-            surname = map.get(1739);
-        } else if (num <= 1819) {
-            surname = map.get(1819);
-        } else if (num <= 1889) {
-            surname = map.get(1889);
-        } else if (num <= 1949) {
-            surname = map.get(1949);
-        } else if (num <= 1999) {
-            surname = map.get(1999);
-        } else if (num <= 2039) {
-            surname = map.get(2039);
-        } else if (num <= 2069) {
-            surname = map.get(2069);
-        } else if (num <= 2089) {
-            surname = map.get(2089);
-        } else if (num <= 2099) {
-            surname = map.get(2099);
-        } else if (num <= 2109) {
-            surname = map.get(2109);
-        } else if (num <= 2119) {
-            surname = map.get(2119);
-        } else if (num <= 2129) {
-            surname = map.get(2129);
+        List<SuperName> surNameList = new ArrayList<SuperName>();
+        surNameList.add(new SuperName("李", 0.3));
+        surNameList.add(new SuperName("王", 0.3));
+        surNameList.add(new SuperName("张", 0.2));
+        surNameList.add(new SuperName("刘", 0.01)); //0.2
+        surNameList.add(new SuperName("陈", 0.01));
+        surNameList.add(new SuperName("杨", 0.01));
+        surNameList.add(new SuperName("赵", 0.01));
+        surNameList.add(new SuperName("黄", 0.01));
+        surNameList.add(new SuperName("周", 0.01));
+        surNameList.add(new SuperName("吴", 0.01));
+        surNameList.add(new SuperName("徐", 0.01));
+        surNameList.add(new SuperName("孙", 0.01));
+        surNameList.add(new SuperName("胡", 0.01));
+        surNameList.add(new SuperName("朱", 0.01)); //0.1
+        surNameList.add(new SuperName("高", 0.01));
+        surNameList.add(new SuperName("林", 0.01));
+        surNameList.add(new SuperName("何", 0.01));
+        surNameList.add(new SuperName("郭", 0.01));
+        surNameList.add(new SuperName("马", 0.01));
+        surNameList.add(new SuperName("罗", 0.01));
+        surNameList.add(new SuperName("梁", 0.01));
+        surNameList.add(new SuperName("宋", 0.01));
+        surNameList.add(new SuperName("郑", 0.01));
+        Random ran = new Random();
+        int random = ran.nextInt(1000);
+        double sum = 0;
+        for(SuperName superName : surNameList) {
+            sum = sum + superName.getRate();
+            if (random < (sum * 1000)) {
+                surname = superName.getXName();
+                break;
+            }
         }
-        boolean flag = random.nextBoolean();//随机标识
-        if (flag) {//true,则名2个汉字
-            userName = surname + getGivenName() + getGivenName();
-        } else {//false,则名1个汉字
-            userName = surname + getGivenName();
-        }
-        return userName;
+        return surname + getGivenName(gender);
     }
 
     /**
      * 生成 名字
      */
-    private static String getGivenName() {
-        String str = null;
-        int highPos, lowPos;
+    private static String getGivenName(String gender) {
+        String givenName = null;
+        String[] maleArr = {
+            "力","明","永","健","世","广","志","义","兴","良","海","山","仁 波","宁","贵","福","生","龙","元","全","国","胜","学","祥","才 发","武","新","利","清","飞","彬",
+            "富","顺","信","子","杰","涛","昌","成","康","星","光","天","达","安","岩","中","茂","进","林 有","坚","和","彪","博","诚","先","敬","震","振","壮","会","思 群",
+            "豪","心","邦","承","乐","绍","功","松","善","厚","庆","磊 民","友","裕","河","哲","江","超","浩","亮","政","谦","亨","奇 固","之","轮","翰","朗","伯","宏","言",
+            "若","鸣","朋","斌","梁 栋","维","启","克","伦","翔","旭","鹏","泽","晨","辰","士","以 建","家","致","树","炎","德","行","时","泰","盛","雄","琛","钧",
+            "安邦","安福","安歌","安国","安和","安康","安澜","安民","安宁","安平","安然","安顺","安翔","安晏","安宜","安怡","安易","安志","昂然","昂雄","宾白","宾鸿","宾实","彬彬",
+            "彬炳","彬郁","斌斌","斌蔚","滨海","波光","波鸿","波峻","波涛","博瀚","博超","博达","博厚","博简","博明","博容","博赡","博涉","博实","博涛","博文","博学","博雅","博延",
+            "博艺","博易","博裕","博远","才捷","才良","才艺","才英","才哲","才俊","成和","成弘","成化","成济","成礼","成龙","成仁","成双","成天","成文","成业","成益","成荫","成周",
+            "承安","承弼","承德","承恩","承福","承基","承教","承平","承嗣","承天","承望","承宣","承颜","承业","承悦","承允","承运","承载","承泽","承志","德本","德海","德厚","德华",
+            "德辉","德惠","德容","德润","德寿","德水","德馨","德曜","德业","德义","德庸","德佑","德宇","德元","德运","德泽","德明","飞昂","飞白","飞飙","飞掣","飞尘","飞沉","飞驰",
+            "飞光","飞翰","飞航","飞翮","飞鸿","飞虎","飞捷","飞龙","飞鸾","飞鸣","飞鹏","飞扬","飞文","飞翔","飞星","飞翼","飞英","飞宇","飞羽","飞雨","飞语","飞跃","飞章","飞舟",
+            "风华","丰茂","丰羽","刚豪","刚洁","刚捷","刚毅","高昂","高岑","高畅","高超","高驰","高达","高澹","高飞","高芬","高峯","高峰","高歌","高格","高寒","高翰","高杰","高洁",
+            "高峻","高朗","高丽","高邈","高旻","高明","高爽","高兴","高轩","高雅","高扬","高阳","高义","高谊","高逸","高懿","高原","高远","高韵","高卓","光赫","光华","光辉","光济",
+            "光霁","光亮","光临","光明","光启","光熙","光耀","光誉","光远","国安","国兴","国源","冠宇","冠玉","晗昱","晗日","涵畅","涵涤","涵亮","涵忍","涵容","涵润","涵涵","涵煦",
+            "涵蓄","涵衍","涵意","涵映","涵育","翰采","翰池","翰飞","翰海","翰翮","翰林","翰墨","翰学","翰音","瀚玥","翰藻","瀚海","瀚漠","昊苍","昊昊","昊空","昊乾","昊穹","昊然",
+            "昊然","昊天","昊焱","昊英","浩波","浩博","浩初","浩大","浩宕","浩荡","浩歌","浩广","浩涆","浩瀚","浩浩","浩慨","浩旷","浩阔","浩漫","浩淼","浩渺","浩邈","浩气","浩然",
+            "浩穰","浩壤","浩思","浩言","皓轩","和蔼","和安","和璧","和昶","和畅","和风","和歌","和光","和平","和洽","和惬","和顺","和硕","和颂","和泰","和悌","和通","和同","和煦",
+            "和雅","和宜","和怡","和玉","和裕","和豫","和悦","和韵","和泽","和正","和志","鹤轩","弘博","弘大","弘方","弘光","弘和","弘厚","弘化","弘济","弘阔","弘亮","弘量","弘深",
+            "弘盛","弘图","弘伟","弘文","弘新","弘雅","弘扬","弘业","弘义","弘益","弘毅","弘懿","弘致","弘壮","宏伯","宏博","宏才","宏畅","宏达","宏大","宏放","宏富","宏峻","宏浚",
+            "宏恺","宏旷","宏阔","宏朗","宏茂","宏邈","宏儒","宏深","宏胜","宏盛","宏爽","宏硕","宏伟","宏扬","宏义","宏逸","宏毅","宏远","宏壮","鸿宝","鸿波","鸿博","鸿才","鸿彩",
+            "鸿畅","鸿畴","鸿达","鸿德","鸿飞","鸿风","鸿福","鸿光","鸿晖","鸿朗","鸿文","鸿熙","鸿羲","鸿禧","鸿信","鸿轩","鸿煊","鸿煊","鸿雪","鸿羽","鸿远","鸿云","鸿运","鸿哲",
+            "鸿祯","鸿振","鸿志","鸿卓","华奥","华采","华彩","华灿","华藏","华池","华翰","华皓","华晖","华辉","华茂","华美","华清","华荣","华容","嘉赐","嘉德","嘉福","嘉良","嘉茂",
+            "嘉木","嘉慕","嘉纳","嘉年","嘉平","嘉庆","嘉荣","嘉容","嘉瑞","嘉胜","嘉石","嘉实","嘉树","嘉澍","嘉熙","嘉禧","嘉祥","嘉歆","嘉许","嘉勋","嘉言","嘉谊","嘉懿","嘉颖",
+            "嘉佑","嘉玉","嘉誉","嘉悦","嘉运","嘉泽","嘉珍","嘉祯","嘉志","嘉致","坚白","坚壁","坚秉","坚成","坚诚","建安","建白","建柏","建本","建弼","建德","建华","建明","建茗",
+            "建木","建树","建同","建修","建业","建义","建元","建章","建中","健柏","金鑫","锦程","瑾瑜","晋鹏","经赋","经亘","经国","经略","经纶","经纬","经武","经业","经义","经艺",
+            "景澄","景福","景焕","景辉","景辉","景龙","景明","景山","景胜","景铄","景天","景同","景曜","靖琪","君昊","君浩","俊艾","俊拔","俊弼","俊才","俊材","俊驰","俊楚","俊达",
+            "俊德","俊发","俊风","俊豪","俊健","俊杰","俊捷","俊郎","俊力","俊良","俊迈","俊茂","俊美","俊民","俊名","俊明","俊楠","俊能","俊人","俊爽","俊悟","俊晤","俊侠","俊贤",
+            "俊雄","俊雅","俊彦","俊逸","俊英","俊友","俊语","俊誉","俊远","俊哲","俊喆","俊智","峻熙","季萌","季同","开畅","开诚","开宇","开济","开霁","开朗","凯安","凯唱","凯定",
+            "凯风","凯复","凯歌","凯捷","凯凯","凯康","凯乐","凯旋","凯泽","恺歌","恺乐","康安","康伯","康成","康德","康复","康健","康乐","康宁","康平","康胜","康盛","康时","康适",
+            "康顺","康泰","康裕","乐安","乐邦","乐成","乐池","乐和","乐家","乐康","乐人","乐容","乐山","乐生","乐圣","乐水","乐天","乐童","乐贤","乐心","乐欣","乐逸","乐意","乐音",
+            "乐咏","乐游","乐语","乐悦","乐湛","乐章","乐正","乐志","黎昕","黎明","力夫","力强","力勤","力行","力学","力言","立诚","立果","立人","立辉","立轩","立群","良奥","良弼",
+            "良才","良材","良策","良畴","良工","良翰","良吉","良骥","良俊","良骏","良朋","良平","良哲","理群","理全","茂才","茂材","茂德","茂典","茂实","茂学","茂勋","茂彦","敏博",
+            "敏才","敏达","敏睿","敏学","敏智","明诚","明达","明德","明辉","明杰","明俊","明朗","明亮","明旭","明煦","明轩","明远","明哲","明喆","明知","明志","明智","明珠","朋兴",
+            "朋义","彭勃","彭薄","彭湃","彭彭","彭魄","彭越","彭泽","彭祖","鹏程","鹏池","鹏飞","鹏赋","鹏海","鹏鲸","鹏举","鹏鹍","鹏鲲","鹏涛","鹏天","鹏翼","鹏云","鹏运","濮存",
+            "溥心","璞玉","璞瑜","浦和","浦泽","奇略","奇迈","奇胜","奇水","奇思","奇邃","奇伟","奇玮","奇文","奇希","奇逸","奇正","奇志","奇致","祺福","祺然","祺祥","祺瑞","琪睿",
+            "庆生","荣轩","锐达","锐锋","锐翰","锐进","锐精","锐立","锐利","锐思","锐逸","锐意","锐藻","锐泽","锐阵","锐志","锐智","睿博","睿才","睿诚","睿慈","睿聪","睿达","睿德",
+            "睿范","睿广","睿好","睿明","睿识","睿思","绍辉","绍钧","绍祺","绍元","升荣","圣杰","晟睿","思聪","思淼","思源","思远","思博","斯年","斯伯","泰初","泰和","泰河","泰鸿",
+            "泰华","泰宁","泰平","泰清","泰然","天材","天成","天赋","天干","天罡","天工","天翰","天和","天华","天骄","天空","天禄","天路","天瑞","天睿","天逸","天佑","天宇","天元",
+            "天韵","天泽","天纵","同方","同甫","同光","同和","同化","同济","巍昂","巍然","巍奕","伟博","伟毅","伟才","伟诚","伟茂","伟懋","伟祺","伟彦","伟晔","伟泽","伟兆","伟志",
+            "温纶","温茂","温书","温韦","温文","温瑜","文柏","文昌","文成","文德","文栋","文赋","文光","文翰","文虹","文华","文康","文乐","文林","文敏","文瑞","文山","文石","文星",
+            "文轩","文宣","文彦","文曜","文耀","文斌","文彬","文滨","向晨","向笛","向文","向明","向荣","向阳","翔宇","翔飞","项禹","项明","晓博","心水","心思","心远","欣德","欣嘉",
+            "欣可","欣然","欣荣","欣怡","欣怿","欣悦","新翰","新霁","新觉","新立","新荣","新知","信鸿","信厚","信鸥","信然","信瑞","兴安","兴邦","兴昌","兴朝","兴德","兴发","兴国",
+            "兴怀","兴平","兴庆","兴生","兴思","兴腾","兴旺","兴为","兴文","兴贤","兴修","兴学","兴言","兴业","兴运","星波","星辰","星驰","星光","星海","星汉","星河","星华","星晖",
+            "星火","星剑","星津","星阑","星纬","星文","星宇","星雨","星渊","星洲","修诚","修德","修杰","修洁","修谨","修筠","修明","修能","修平","修齐","修然","修为","修伟","修文",
+            "修雅","修永","修远","修真","修竹","修贤","旭尧","炫明","学博","学海","学林","学民","学名","学文","学义","学真","雪松","雪峰","雪风","雅昶","雅畅","雅达","雅惠","雅健",
+            "雅珺","雅逸","雅懿","雅志","炎彬","阳飙","阳飇","阳冰","阳波","阳伯","阳成","阳德","阳华","阳晖","阳辉","阳嘉","阳平","阳秋","阳荣","阳舒","阳朔","阳文","阳曦","阳夏",
+            "阳旭","阳煦","阳炎","阳焱","阳曜","阳羽","阳云","阳泽","阳州","烨赫","烨华","烨磊","烨霖","烨然","烨烁","烨伟","烨烨","烨熠","烨煜","毅然","逸仙","逸明","逸春","宜春",
+            "宜民","宜年","宜然","宜人","宜修","意远","意蕴","意致","意智","熠彤","懿轩","英飙","英博","英才","英达","英发","英范","英光","英豪","英华","英杰","英朗","英锐","英睿",
+            "英睿","英韶","英卫","英武","英悟","英勋","英彦","英耀","英奕","英逸","英毅","英哲","英喆","英卓","英资","英纵","永怡","永春","永安","永昌","永长","永丰","永福","永嘉",
+            "永康","永年","永宁","永寿","永思","永望","永新","永言","永逸","永元","永贞","咏德","咏歌","咏思","咏志","勇男","勇军","勇捷","勇锐","勇毅","宇达","宇航","宇寰","宇文",
+            "宇荫","雨伯","雨华","雨石","雨信","雨星","雨泽","玉宸","玉成","玉龙","玉泉","玉山","玉石","玉书","玉树","玉堂","玉轩","玉宇","玉韵","玉泽","煜祺","元白","元德","元化",
+            "元基","元嘉","元甲","元驹","元凯","元恺","元魁","元良","元亮","元龙","元明","元青","元思","元纬","元武","元勋","元正","元忠","元洲","远航","苑博","苑杰","越彬","蕴涵",
+            "蕴和","蕴藉","展鹏","哲瀚","哲茂","哲圣","哲彦","振海","振国","正诚","正初","正德","正浩","正豪","正平","正奇","正青","正卿","正文","正祥","正信","正雅","正阳","正业",
+            "正谊","正真","正志","志诚","志新","志勇","志明","志国","志强","志尚","志专","志文","志行","志学","志业","志义","志用","志泽","致远","智明","智鑫","智勇","智敏","智志",
+            "智渊","子安","子晋","子民","子明","子默","子墨","子平","子琪","子石","子实","子真","子濯","子昂","子轩","子瑜","自明","自强","作人","自怡","自珍","曾琪","泽宇","泽语"
+        };
+        String[] femaleArr = {
+            "春草","汀兰","红英","美华","兰芝","秋菊","抱月","秋泪","凌波","静波","彩云","风","凡薇","夜云","幼芙","以彤","怀云","幻柳","芷秋","以菱","靖","柳","紫松","凡霜","灵云",
+            "采芙","亦露","香风","觅蓉","雨槐","乐蕊","寄蓝","乐彤","迎琴","之亦","雨寒","谷山","凝安","曼萍","碧露","书南","山薇","念珊","芷雁","尔蕾","绮雪","傲萱","新琴","绿蝶",
+            "慕旋","怀易","傲云","晓梅","诗菱","灵珊","幻香","若云","如霜","晓晴","灵山","恨桃","梦凝","幻彤","觅波","慕玉","念山","爽","琬","茗","羽","希","宁","欣","飘","育","滢",
+            "馥","筠","柔","竹","霭","凝","晓","欢","霄梅","绮荷","乐山","又梦","听蓝","又彤","向竹","安琴","秋露","如波","尔槐","小易","静云","梦雪","幼凝","慕莲","如薇","静秋",
+            "幼柏","谷易","安芙","觅琴","冰槐","诗青","碧秋","从琴","从梦","寻彩","春","菊","兰","凤","洁","梅","琳","素","云","莲","真","环","雪","荣","爱","妹","霞","香瑞","凡",
+            "佳","嘉","琼","勤","珍","贞","莉","桂","娣","叶","璧","璐","娅","琦","晶","妍","茜黛","青","倩","婷","姣","婉","娴","瑾","颖","露","瑶","怡","婵","雁","蓓","纨","仪",
+            "荷","丹","伊","亚","宜","可","姬","舒","影","荔","枝","思","丽","芬","芳","燕","莺","媛","艳","珊","莎","蓉","眉","君","琴","毓","悦","昭","冰","枫","芸","菲","寒",
+            "锦","玲","秋","秀","娟","英","华","慧","巧","美","娜","静","淑","惠","珠","翠","雅","芝","玉","萍","红","月","寄容","秋波","冷云","秋儿","怀菱","亦柏","易槐","怀卉",
+            "紫桃","向蕊","易青","千蕊","怜露","灵旋","怀梅","天柏","半白","碧安","秋枫","傲丝","春柔","冰岚","雅翠","易白","夜灵","静柔","醉绿","采雁","易莲","笑南","芷雁","觅霜","海柏",
+            "凝雪","诗晴","彩","艳","芳","秀","美","丽","情","红","绿","紫","青","翠","金彩","艳莲","秀美","多丽","小红","绿珠","紫娟","娅闺","娅斑","娅贡","娅睿","娅贺","娅顺",
+            "娅索","娅肯","娅旃","雪斯","雪格","雪晶","雪粉","雪珺","雪壬","雪予","雪闵","雪菁","雪登","娅嫦","娅娜","娅雅","娅萍","娅茜","娅芬","娅菲","娅雁","娅水","娅纹","娅翠",
+            "娅宁","娅云","娅鸣","娅琼","娅超","娅裳","娅凉","娅天","娅福","娅瑞","娅萝","娅飘","娅慈","海花","海祎","海幻","海碧","海书","海惜","海娟","海怀","海槐","海媛","娅善",
+            "海之","海芷","海流","海媚","海育","海隽","海源","海歌","海龄","海派","海领","海盛","海端","海维","海纳","海宝","海纶","海翡","海恬","海尹","海溪","海芮","海茗","海伦",
+            "梨婷","梨桑","梨夏","梨嫣","梨尔","梨华","梨素","梨花","梨祎","梨倚","梨凤","梨净","梨清","梨舒","梨茵","梨桃","梨芙","梨丝","娅心","娅娥","娅恰","娅尊","娅智","娅寿",
+            "娅硕","娅斯","娅格","娅晶","雪特","雪戈","雪绫","雪瑗","雪宸","雪萌","雪珂","雪殷","雪毓","雪宾","娅曦","娅梦","娅玲","娅语","娅雯","娅丹","娅月","娅嘉","娅真","娅绿",
+            "娅灵","娅露","娅蛟","娅芹","娅芝","娅菊","娅瑛","娅絮","娅友","娅温","娅纯","娅畅","娅方"
+        };
         Random random = new Random();
-        highPos = (176 + Math.abs(random.nextInt(71)));//区码，0xA0打头，从第16区开始，即0xB0=11*16=176,16~55一级汉字，56~87二级汉字
-        random = new Random();
-        lowPos = 161 + Math.abs(random.nextInt(94));//位码，0xA0打头，范围第1~94列
-        byte[] bArr = new byte[2];
-        bArr[0] = (new Integer(highPos)).byteValue();
-        bArr[1] = (new Integer(lowPos)).byteValue();
-        try {
-            str = new String(bArr, "GB2312");//区位码组合成汉字(仿宋体)
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if (gender.equals("男")) {
+            int index = random.nextInt(maleArr.length);
+            givenName = maleArr[index];
+        } else {
+            int index = random.nextInt(femaleArr.length);
+            givenName = femaleArr[index];
         }
-        return str;
+        return givenName;
     }
 
-    private static String getPhone() {
-        String ChinaMobile[] = {"134", "135", "136", "137", "138", "139", "150", "151", "152", "157", "158", "159", "187", "188"}; //中国移动
-        String ChinaUnicom[] = {"130", "131", "132", "155", "156", "185", "186", "145"}; //中国联通
-        String ChinaTelecom[] = {"133", "153", "180", "181", "189"}; //中国电信
-        String tel[][] = {ChinaMobile, ChinaUnicom, ChinaTelecom};
-        Random rd = new Random();
-        int index = rd.nextInt(tel.length); //随机选择一个运营商
-        int size = rd.nextInt(tel[index].length); //随机选择一个号码抬头
-        return tel[index][size] + "" + rd.nextInt(10) + "" + rd.nextInt(10) + "" + rd.nextInt(10) + "" + rd.nextInt(10) + "" + rd.nextInt(10) + "" + rd.nextInt(10) + "" + rd.nextInt(10) + "" + rd.nextInt(10);
-    }
-
-    private static String getIdentification(String cityName) {
-        Map<String, HashMap<Integer, String>> map = new HashMap<String, HashMap<Integer, String>>();
-        HashMap<Integer, String> areaMap1 = new HashMap<Integer, String>(); //贵阳市
-        areaMap1.put(1, "520101");
-        areaMap1.put(2, "520102");
-        areaMap1.put(3, "520103");
-        areaMap1.put(4, "520111");
-        areaMap1.put(5, "520112");
-        areaMap1.put(6, "520113");
-        areaMap1.put(7, "520114");
-        areaMap1.put(8, "520121");
-        areaMap1.put(9, "520122");
-        areaMap1.put(10, "520123");
-        areaMap1.put(11, "520181");
-        map.put("贵阳市", areaMap1);
-
-        HashMap<Integer, String> areaMap2 = new HashMap<Integer, String>(); //六盘水市
-        areaMap2.put(1, "520201");
-        areaMap2.put(2, "520203");
-        areaMap2.put(3, "520221");
-        areaMap2.put(4, "520222");
-        map.put("六盘水市", areaMap2);
-
-        HashMap<Integer, String> areaMap3 = new HashMap<Integer, String>(); //遵义市
-        areaMap3.put(1, "520301");
-        areaMap3.put(2, "520302");
-        areaMap3.put(3, "520303");
-        areaMap3.put(4, "520321");
-        areaMap3.put(5, "520322");
-        areaMap3.put(6, "520323");
-        areaMap3.put(7, "520324");
-        areaMap3.put(8, "520325");
-        areaMap3.put(9, "520326");
-        areaMap3.put(10, "520327");
-        areaMap3.put(11, "520328");
-        areaMap3.put(12, "520329");
-        areaMap3.put(13, "520330");
-        areaMap3.put(14, "520381");
-        areaMap3.put(15, "520382");
-        map.put("遵义市", areaMap3);
-
-        HashMap<Integer, String> areaMap4 = new HashMap<Integer, String>(); //安顺市
-        areaMap4.put(1, "520401");
-        areaMap4.put(2, "520402");
-        areaMap4.put(3, "520421");
-        areaMap4.put(4, "520422");
-        areaMap4.put(5, "520423");
-        areaMap4.put(6, "520424");
-        areaMap4.put(7, "520425");
-        map.put("安顺市", areaMap4);
-
-        HashMap<Integer, String> areaMap5 = new HashMap<Integer, String>(); //铜仁市
-        areaMap5.put(1, "522201");
-        areaMap5.put(2, "522222");
-        areaMap5.put(3, "522223");
-        areaMap5.put(4, "522224");
-        areaMap5.put(5, "522225");
-        areaMap5.put(6, "522226");
-        areaMap5.put(7, "522227");
-        areaMap5.put(8, "522228");
-        areaMap5.put(9, "522229");
-        areaMap5.put(10, "522230");
-        map.put("铜仁市", areaMap5);
-
-        HashMap<Integer, String> areaMap6 = new HashMap<Integer, String>(); //黔南布依族苗族自治州
-        areaMap6.put(1, "522701");
-        areaMap6.put(2, "522702");
-        areaMap6.put(3, "522722");
-        areaMap6.put(4, "522723");
-        areaMap6.put(5, "522725");
-        areaMap6.put(6, "522726");
-        areaMap6.put(7, "522727");
-        areaMap6.put(8, "522728");
-        areaMap6.put(9, "522729");
-        areaMap6.put(10, "522730");
-        areaMap6.put(11, "522731");
-        areaMap6.put(12, "522732");
-        map.put("黔南布依族苗族自治州", areaMap6);
-
-        HashMap<Integer, String> areaMap7 = new HashMap<Integer, String>(); //毕节市
-        areaMap7.put(1, "522401");
-        areaMap7.put(2, "522422");
-        areaMap7.put(3, "522423");
-        areaMap7.put(4, "522424");
-        areaMap7.put(5, "522425");
-        areaMap7.put(6, "522426");
-        areaMap7.put(7, "522427");
-        areaMap7.put(8, "522428");
-        map.put("毕节市", areaMap7);
-
-        HashMap<Integer, String> areaMap8 = new HashMap<Integer, String>(); //黔东南苗族侗族自治州
-        areaMap8.put(1, "522601");
-        areaMap8.put(2, "522622");
-        areaMap8.put(3, "522623");
-        areaMap8.put(4, "522624");
-        areaMap8.put(5, "522625");
-        areaMap8.put(6, "522626");
-        areaMap8.put(7, "522627");
-        areaMap8.put(8, "522628");
-        areaMap8.put(9, "522629");
-        areaMap8.put(10, "522630");
-        areaMap8.put(11, "522631");
-        areaMap8.put(12, "522632");
-        areaMap8.put(13, "522633");
-        areaMap8.put(14, "522634");
-        areaMap8.put(15, "522635");
-        areaMap8.put(16, "522636");
-        map.put("黔东南苗族侗族自治州", areaMap8);
-
-        HashMap<Integer, String> areaMap9 = new HashMap<Integer, String>(); //黔西南州
-        areaMap9.put(1, "522301");
-        areaMap9.put(2, "522322");
-        areaMap9.put(3, "522323");
-        areaMap9.put(4, "522324");
-        areaMap9.put(5, "522325");
-        areaMap9.put(6, "522326");
-        areaMap9.put(7, "522327");
-        areaMap9.put(8, "522328");
-        map.put("黔西南州", areaMap9);
-
-        HashMap<Integer, String> areaHash = map.get(cityName);
+    private static String getIdentification() {
+        String[] guiZhouIDArr = {
+            "520101", "520102", "520103", "520111", "520112", "520113", "520114", "520121", "520122", "520123", "520181", "520201", "520203", "520221", "520222", "520301",
+            "520302", "520303", "520321", "520322", "520323", "520324", "520325", "520326", "520327", "520328", "520329", "520330", "520381", "520382", "520401", "520402",
+            "520421", "520422", "520423", "520424", "520425", "522201", "522222", "522223", "522224", "522225", "522226", "522227", "522228", "522229", "522230", "522701",
+            "522702", "522722", "522723", "522725", "522726", "522727", "522728", "522729", "522730", "522731", "522732", "522401", "522422", "522423", "522424", "522425",
+            "522426", "522427", "522428", "522601", "522622", "522623", "522624", "522625", "522626", "522627", "522628", "522629", "522630", "522631", "522632", "522633",
+            "522634", "522635", "522636", "522301", "522322", "522323", "522324", "522325", "522326", "522327", "522328",
+        };
         Random random = new Random();
-        String IDHead = areaHash.get(random.nextInt(areaHash.size()) + 1);
+        String IDHead = guiZhouIDArr[random.nextInt(guiZhouIDArr.length)];
         String IDNum = IDHead + "19" + random.nextInt(10) + random.nextInt(10) //身份证地区码　＋　出生年份
-                        + supplyZero() + supplyZero() //出生月份和日期
-                        + random.nextInt(10) + random.nextInt(10) + random.nextInt(10) + random.nextInt(10); //身份证后四位
+            + supplyZero() + supplyZero() //出生月份和日期
+            + random.nextInt(10) + random.nextInt(10) + random.nextInt(10) + random.nextInt(10); //身份证后四位
         return IDNum;
     }
 
@@ -352,7 +254,7 @@ public class addUser {
     private static String supplyZero() {
         Random random = new Random();
         int num = random.nextInt(12) + 1;
-        if (num/10 > 0) {
+        if (num / 10 > 0) {
             return String.valueOf(num);
         } else {
             return "0" + num;
@@ -365,7 +267,7 @@ public class addUser {
     private static String gender(String IDNum) {
         String gender = null;
         int num = IDNum.charAt(16);
-        if (num%2 == 0) {
+        if (num % 2 == 0) {
             gender = "女";
         } else {
             gender = "男";
@@ -375,119 +277,25 @@ public class addUser {
 
     @Test
     public void test() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
             add();
         }
+
     }
 
     @Test
     public void test2() {
-        for (int i = 0; i < 100; i++) {
-        System.out.println(supplyZero());
+        for (int i = 0; i < 40; i++) {
+            System.out.println(getUserName("女"));
         }
     }
 
     @Test
     public void test3() {
         for (int i = 0; i < 100; i++) {
-            System.out.println(getIdentification("遵义市"));
+            System.out.println(getIdentification());
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private static String getUserName() {
-//        /*
-//        李 王 张 刘 陈 杨 赵 黄
-//        周 吴 徐 孙 胡 朱 高 林
-//        何 郭 马 罗 梁 宋 郑
-//         */
-//        Map<HashMap<Integer, Integer>, Object> map = new HashMap<HashMap<Integer, Integer>, Object>();
-//        HashMap<Integer, Integer> chanceMap1 = new HashMap<Integer, Integer>();
-//        chanceMap1.put(0, 199); //200
-//        HashMap<Integer, Integer> chanceMap2 = new HashMap<Integer, Integer>();
-//        chanceMap2.put(200, 389); //190
-//        HashMap<Integer, Integer> chanceMap3 = new HashMap<Integer, Integer>();
-//        chanceMap3.put(390, 569); //180
-//        HashMap<Integer, Integer> chanceMap4 = new HashMap<Integer, Integer>();
-//        chanceMap4.put(570, 739); //170
-//        HashMap<Integer, Integer> chanceMap5 = new HashMap<Integer, Integer>();
-//        chanceMap5.put(740, 899); //160
-//        HashMap<Integer, Integer> chanceMap6 = new HashMap<Integer, Integer>();
-//        chanceMap6.put(900, 1049); //150
-//        HashMap<Integer, Integer> chanceMap7 = new HashMap<Integer, Integer>();
-//        chanceMap7.put(1050, 1189); //140
-//        HashMap<Integer, Integer> chanceMap8 = new HashMap<Integer, Integer>();
-//        chanceMap8.put(1190, 1319); //130
-//        HashMap<Integer, Integer> chanceMap9 = new HashMap<Integer, Integer>();
-//        chanceMap9.put(1320, 1439); //120
-//        HashMap<Integer, Integer> chanceMap10 = new HashMap<Integer, Integer>();
-//        chanceMap10.put(1440, 1549); //110
-//        HashMap<Integer, Integer> chanceMap11 = new HashMap<Integer, Integer>();
-//        chanceMap11.put(1550, 1639); //100
-//        HashMap<Integer, Integer> chanceMap12 = new HashMap<Integer, Integer>();
-//        chanceMap12.put(1650, 1739); //90
-//        HashMap<Integer, Integer> chanceMap13 = new HashMap<Integer, Integer>();
-//        chanceMap13.put(1740, 1819); //80
-//        HashMap<Integer, Integer> chanceMap14 = new HashMap<Integer, Integer>();
-//        chanceMap14.put(1820, 1889); //70
-//        HashMap<Integer, Integer> chanceMap15 = new HashMap<Integer, Integer>();
-//        chanceMap15.put(1890, 1949); //60
-//        HashMap<Integer, Integer> chanceMap16 = new HashMap<Integer, Integer>();
-//        chanceMap16.put(1950, 1999); //50
-//        HashMap<Integer, Integer> chanceMap17 = new HashMap<Integer, Integer>();
-//        chanceMap17.put(2000, 2039); //40
-//        HashMap<Integer, Integer> chanceMap18 = new HashMap<Integer, Integer>();
-//        chanceMap18.put(2040, 2069); //30
-//        HashMap<Integer, Integer> chanceMap19 = new HashMap<Integer, Integer>();
-//        chanceMap19.put(2070, 2089); //20
-//        HashMap<Integer, Integer> chanceMap20 = new HashMap<Integer, Integer>();
-//        chanceMap20.put(2090, 2099); //10
-//        HashMap<Integer, Integer> chanceMap21 = new HashMap<Integer, Integer>();
-//        chanceMap21.put(2100, 2109); //10
-//        HashMap<Integer, Integer> chanceMap22 = new HashMap<Integer, Integer>();
-//        chanceMap22.put(2110, 2119); //10
-//        HashMap<Integer, Integer> chanceMap23 = new HashMap<Integer, Integer>();
-//        chanceMap23.put(2120, 2129); //   共23
-//        map.put(chanceMap1, "李");
-//        map.put(chanceMap2 ,"王");
-//        map.put(chanceMap3 ,"张");
-//        map.put(chanceMap4 ,"刘");
-//        map.put(chanceMap5 ,"陈");
-//        map.put(chanceMap6 ,"杨");
-//        map.put(chanceMap7 ,"赵");
-//        map.put(chanceMap8 ,"黄");
-//        map.put(chanceMap9 ,"周");
-//        map.put(chanceMap10 ,"吴");
-//        map.put(chanceMap11 ,"徐");
-//        map.put(chanceMap12 ,"孙");
-//        map.put(chanceMap13 ,"胡");
-//        map.put(chanceMap14 ,"朱");
-//        map.put(chanceMap15 ,"高");
-//        map.put(chanceMap16 ,"林");
-//        map.put(chanceMap17 ,"何");
-//        map.put(chanceMap18 ,"郭");
-//        map.put(chanceMap19 ,"马");
-//        map.put(chanceMap20 ,"罗");
-//        map.put(chanceMap21 ,"梁");
-//        map.put(chanceMap22 ,"宋");
-//        map.put(chanceMap23 ,"郑");
-//
-//    }
 
 }
