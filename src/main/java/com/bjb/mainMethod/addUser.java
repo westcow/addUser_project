@@ -9,7 +9,6 @@ import com.bjb.entity.User;
 import com.bjb.entity.Volunteer;
 import com.bjb.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -17,36 +16,33 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
- * @Description
+ * @Description 自动生成用户信息
  * @Author XJT
- * @CreateDate
- * @Return
- * @Version
+ * @CreateDate 2021年3月17日
  */
 public class addUser {
-    //    public static void main(String[] args) {
-    public static void add() {
+    public static void main(String[] args) {
+        add(Integer.parseInt(args[0]));
+    }
+
+    private static void add(Integer provinceCode) {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User user = new User();
         user.setUserCode(UUID.randomUUID().toString().replaceAll("-", ""));
-        String IDNum = getIdentification();
-        System.out.println("身份证号：" + IDNum);
+        String IDNum = getIdentification(provinceCode);
         user.setGender(gender(IDNum));
-        System.out.println("性别：" + user.getGender());
         String userName = getUserName(user.getGender());
         user.setUserName(userName);
-        System.out.println("姓名：" + user.getUserName());
         user.setRoleId(10);
         user.setCreatDate(new Date());
         user.setPassword(IDMd5("a123456789"));
-        user.setProvinceCode(52);
+        user.setProvinceCode(provinceCode);
         user.setCityCode(getAreaBySuper(user.getProvinceCode()).getAreaCode());
         user.setCountyCode(getAreaBySuper(user.getCityCode()).getAreaCode());
         user.setProvinceName(getAreaByCode(user.getProvinceCode()).getAreaName());
         user.setCityName(getAreaBySuper(user.getProvinceCode()).getAreaName());
         user.setCountyName(getAreaBySuper(user.getCityCode()).getAreaName());
-        System.out.println("城市名：" + user.getCityName());
         user.setIdentification(new StringBuilder(IDNum).replace(6,14, "********").toString());
         user.setStatus(1);
         user.setAuditStatus(1);
@@ -148,7 +144,7 @@ public class addUser {
         String givenName = null;
         String[] maleArr = {
             "力","明","永","健","世","广","志","义","兴","良","海","山","仁 波","宁","贵","福","生","龙","元","全","国","胜","学","祥","才 发","武","新","利","清","飞","彬",
-            "富","顺","信","子","杰","涛","昌","成","康","星","光","天","达","安","岩","中","茂","进","林 有","坚","和","彪","博","诚","先","敬","震","振","壮","会","思 群",
+            "富","顺","信","子","杰","涛","昌","成","康","星","光","天","达","安","岩","中","茂","进","林有","坚","和","彪","博","诚","先","敬","震","振","壮","会","思 群",
             "豪","心","邦","承","乐","绍","功","松","善","厚","庆","磊 民","友","裕","河","哲","江","超","浩","亮","政","谦","亨","奇 固","之","轮","翰","朗","伯","宏","言",
             "若","鸣","朋","斌","梁 栋","维","启","克","伦","翔","旭","鹏","泽","晨","辰","士","以 建","家","致","树","炎","德","行","时","泰","盛","雄","琛","钧",
             "安邦","安福","安歌","安国","安和","安康","安澜","安民","安宁","安平","安然","安顺","安翔","安晏","安宜","安怡","安易","安志","昂然","昂雄","宾白","宾鸿","宾实","彬彬",
@@ -231,7 +227,7 @@ public class addUser {
         return givenName;
     }
 
-    private static String getIdentification() {
+    private static String getIdentification(Integer pCode) {
         String[] guiZhouIDArr = {
             "520101", "520102", "520103", "520111", "520112", "520113", "520114", "520121", "520122", "520123", "520181", "520201", "520203", "520221", "520222", "520301",
             "520302", "520303", "520321", "520322", "520323", "520324", "520325", "520326", "520327", "520328", "520329", "520330", "520381", "520382", "520401", "520402",
@@ -240,12 +236,49 @@ public class addUser {
             "522426", "522427", "522428", "522601", "522622", "522623", "522624", "522625", "522626", "522627", "522628", "522629", "522630", "522631", "522632", "522633",
             "522634", "522635", "522636", "522301", "522322", "522323", "522324", "522325", "522326", "522327", "522328",
         };
+        String[] neiMengIDArr = {
+            "150100", "150101", "150102", "150103", "150104", "150105", "150121", "150122", "150123", "150124", "150125", "150200", "150201", "150202", "150203", "150204",
+            "150205", "150206", "150207", "150221", "150222", "150223", "150300", "150301", "150302", "150303", "150304", "150400", "150401", "150402", "150403", "150404",
+            "150421", "150422", "150423", "150424", "150425", "150426", "150428", "150429", "150430", "150500", "150501", "150502", "150521", "150522", "150523", "150524",
+            "150525", "150526", "150581", "150600", "150602", "150621", "150622", "150623", "150624", "150625", "150626", "150627", "150700", "150701", "150702", "150721",
+            "150722", "150723", "150724", "150725", "150726", "150727", "150781", "150782", "150783", "150784", "150785", "150800", "150801", "150802", "150821", "150822",
+            "150823", "150824", "150825", "150826", "150900", "150901", "150902", "150921", "150922", "150923", "150924", "150925", "150926", "150927", "150928", "150929",
+            "150981", "152200", "152201", "152202", "152221", "152222", "152223", "152224", "152500", "152501", "152502", "152522", "152523", "152524", "152525", "152526",
+            "152527", "152528", "152529", "152530", "152531", "152600", "152900", "152921", "152922", "152923",
+        };
+        String[] haiNanIDArr = {
+            "460100", "460101", "460105", "460106", "460107", "460108", "460200", "460201", "469000", "469001", "469002", "469003", "469005", "469006", "469007", "469025",
+            "469026", "469027", "469028", "469030", "469031", "469033", "469034", "469035", "469036", "469037", "469038", "469039",
+        };
+        String[] heBeiIDArr = {
+            "130100", "130101", "130102", "130103", "130104", "130105", "130107", "130108", "130121", "130123", "130124", "130125", "130126", "130127", "130128", "130129",
+            "130130", "130131", "130132", "130133", "130181", "130182", "130183", "130184", "130185", "130200", "130201", "130202", "130203", "130204", "130205", "130207",
+            "130208", "130223", "130224", "130225", "130227", "130229", "130230", "130281", "130283", "130300", "130301", "130302", "130303", "130304", "130321", "130322",
+            "130323", "130324", "130400", "130401", "130402", "130403", "130404", "130406", "130421", "130423", "130424", "130425", "130426", "130427", "130428", "130429",
+            "130430", "130431", "130432", "130433", "130434", "130435", "130481", "130500", "130501", "130502", "130503", "130521", "130522", "130523", "130524", "130525",
+            "130526", "130527", "130528", "130529", "130530", "130531", "130532", "130533", "130534", "130535", "130581", "130582", "130600", "130601", "130602", "130603",
+            "130604", "130621", "130622", "130623", "130624", "130625", "130626", "130627", "130628", "130629", "130630", "130631", "130632", "130634", "130635", "130636",
+            "130637", "130638", "130681", "130682", "130683", "130684", "130700", "130701", "130702", "130703", "130705", "130706", "130721", "130722", "130723", "130724",
+            "130725", "130726", "130727", "130728", "130729", "130730", "130731", "130732", "130733", "130800", "130801", "130802", "130803", "130804", "130821", "130822",
+            "130823", "130824", "130825", "130826", "130827", "130828", "130900", "130901", "130902", "130903", "130921", "130922", "130923", "130924", "130925", "130926",
+            "130927", "130928", "130929", "130930", "130981", "130982", "130983", "130984", "131000", "131001", "131002", "131003", "131022", "131023", "131024", "131025",
+            "131026", "131028", "131081", "131082", "131100", "131101", "131102", "131121", "131122", "131123", "131124", "131125", "131126", "131127", "131128", "131181",
+            "131182",
+        };
         Random random = new Random();
-        String IDHead = guiZhouIDArr[random.nextInt(guiZhouIDArr.length)];
-        String IDNum = IDHead + "19" + random.nextInt(10) + random.nextInt(10) //身份证地区码　＋　出生年份
+        String IDHead = null;
+        if (pCode == 52) {
+            IDHead = guiZhouIDArr[random.nextInt(guiZhouIDArr.length)];
+        } else if (pCode == 15) {
+            IDHead = neiMengIDArr[random.nextInt(neiMengIDArr.length)];
+        } else if (pCode == 46) {
+            IDHead = haiNanIDArr[random.nextInt(haiNanIDArr.length)];
+        } else if (pCode == 13) {
+            IDHead = heBeiIDArr[random.nextInt(heBeiIDArr.length)];
+        }
+        return IDHead + "19" + random.nextInt(10) + random.nextInt(10) //身份证地区码　＋　出生年份
             + supplyZero() + supplyZero() //出生月份和日期
             + random.nextInt(10) + random.nextInt(10) + random.nextInt(10) + random.nextInt(10); //身份证后四位
-        return IDNum;
     }
 
     /**
@@ -274,28 +307,4 @@ public class addUser {
         }
         return gender;
     }
-
-    @Test
-    public void test() {
-        for (int i = 0; i < 5; i++) {
-            add();
-        }
-
-    }
-
-    @Test
-    public void test2() {
-        for (int i = 0; i < 40; i++) {
-            System.out.println(getUserName("女"));
-        }
-    }
-
-    @Test
-    public void test3() {
-        for (int i = 0; i < 100; i++) {
-            System.out.println(getIdentification());
-        }
-    }
-
-
 }
