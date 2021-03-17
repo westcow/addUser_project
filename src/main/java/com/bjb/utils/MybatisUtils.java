@@ -19,17 +19,14 @@ public class MybatisUtils {
 
     private static SqlSessionFactory sqlSessionFactory;
 
-    static {
+    public static SqlSession getSqlSession(String environment) {
         try {
             String resource = "mybatis-config.xml";
             InputStream inputStream = Resources.getResourceAsStream(resource);
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, environment); //通过environment参数可自由切换数据库配置
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static SqlSession getSqlSession() {
         return sqlSessionFactory.openSession(true);
     }
 }

@@ -16,7 +16,7 @@ public class UserDaoTest {
 
     @Test
     public void test() {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SqlSession sqlSession = MybatisUtils.getSqlSession("dev");
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User user = userDao.queryUser(1);
         System.out.println(user);
@@ -25,7 +25,7 @@ public class UserDaoTest {
 
     @Test
     public void testAdd() {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SqlSession sqlSession = MybatisUtils.getSqlSession("dev");
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User u = new User();
         u.setUserName("王大锤");
