@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="mybatisTest" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f69efa55-8fa5-470b-86a0-e27969ac5b97" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mybatisTest.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/dao/AreaDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/dao/AreaMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/dao/UserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/dao/UserMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/dao/VolunteerDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/dao/VolunteerMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/entity/Area.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/entity/Volunteer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/mainMethod/addUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bjb/utils/MybatisUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/bjb/dao/UserDaoTest.java" afterDir="false" />
+    <list default="true" id="f69efa55-8fa5-470b-86a0-e27969ac5b97" name="Default Changelist" comment="username 修改为 userName">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatisTest.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/bjb/dao/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/bjb/dao/UserDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bjb/mainMethod/addUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bjb/mainMethod/addUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/bjb/utils/MybatisUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bjb/utils/MybatisUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/bjb/dao/UserDaoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/bjb/dao/UserDaoTest.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +49,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/tools/apache-maven-3.6.3" />
+        <option name="userSettingsFile" value="D:\tools\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="importAutomatically" value="true" />
@@ -62,13 +67,20 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ReadAndWriteWord" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.bjb.entity" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\mysoftware\java\intelliJ IDEA\mybatisTest" />
+      <recent name="F:\mysoftware\java\intelliJ IDEA\mybatisTest\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -83,9 +95,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.addUser">
-    <configuration name="addUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.bjb.mainMethod.addUser" />
+  <component name="RunManager" selected="Application.test">
+    <configuration name="ReadTxt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.bjb.mainMethod.ReadTxt" />
       <module name="mybatisTest" />
       <extension name="coverage">
         <pattern>
@@ -97,18 +109,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserDaoTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="addUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.bjb.mainMethod.addUser" />
       <module name="mybatisTest" />
+      <option name="PROGRAM_PARAMETERS" value="52" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.bjb.dao.*" />
+          <option name="PATTERN" value="com.bjb.mainMethod.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.bjb.dao" />
-      <option name="MAIN_CLASS_NAME" value="com.bjb.dao.UserDaoTest" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.bjb.mainMethod.test" />
+      <module name="mybatisTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.bjb.mainMethod.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -129,11 +152,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserDaoTest.testGetYear" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mybatisTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.bjb.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.bjb.dao" />
+      <option name="MAIN_CLASS_NAME" value="com.bjb.dao.UserDaoTest" />
+      <option name="METHOD_NAME" value="testGetYear" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.addUser" />
+      <item itemvalue="Application.ReadTxt" />
+      <item itemvalue="Application.test" />
+      <item itemvalue="JUnit.UserDaoTest.testGetYear" />
+      <item itemvalue="JUnit.UserDaoTest.testAdd" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.addUser" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.ReadTxt" />
         <item itemvalue="JUnit.UserDaoTest.testAdd" />
-        <item itemvalue="JUnit.UserDaoTest.test" />
+        <item itemvalue="Application.addUser" />
+        <item itemvalue="JUnit.UserDaoTest.testGetYear" />
       </list>
     </recent_temporary>
   </component>
@@ -148,10 +196,128 @@
       <option name="presentableId" value="Default" />
       <updated>1615522352152</updated>
       <workItem from="1615522356898" duration="20928000" />
+      <workItem from="1615770507870" duration="20919000" />
+      <workItem from="1615856488999" duration="26190000" />
+      <workItem from="1615942969133" duration="21706000" />
+      <workItem from="1616030362400" duration="653000" />
+      <workItem from="1616117778517" duration="6650000" />
+      <workItem from="1616375705208" duration="1195000" />
+      <workItem from="1616636261845" duration="675000" />
+      <workItem from="1616727075581" duration="1243000" />
+      <workItem from="1616745170782" duration="1658000" />
+      <workItem from="1616748436625" duration="16000" />
+      <workItem from="1619141791618" duration="709000" />
+      <workItem from="1621577451144" duration="419000" />
+      <workItem from="1622095343059" duration="4512000" />
+      <workItem from="1622101382866" duration="4212000" />
+      <workItem from="1623826924487" duration="154000" />
+      <workItem from="1623827200445" duration="799000" />
+      <workItem from="1623829939535" duration="6606000" />
+      <workItem from="1623921053004" duration="57000" />
+      <workItem from="1624701826434" duration="614000" />
+      <workItem from="1626398313376" duration="2743000" />
+      <workItem from="1626403052792" duration="15000" />
+      <workItem from="1631179850496" duration="64000" />
+      <workItem from="1636508980090" duration="3106000" />
+      <workItem from="1637733948326" duration="3698000" />
+      <workItem from="1637818438562" duration="154000" />
+      <workItem from="1637818648045" duration="659000" />
+      <workItem from="1637821560903" duration="317000" />
+      <workItem from="1638413945345" duration="40000" />
+      <workItem from="1638414062578" duration="643000" />
+      <workItem from="1638416409867" duration="24000" />
+      <workItem from="1638427074346" duration="890000" />
+      <workItem from="1638432162861" duration="616000" />
+      <workItem from="1638868028212" duration="20000" />
+      <workItem from="1638869019052" duration="34000" />
+      <workItem from="1639638250030" duration="109000" />
+      <workItem from="1639647566800" duration="567000" />
+      <workItem from="1640050045775" duration="681000" />
+      <workItem from="1642468397480" duration="96000" />
+      <workItem from="1644893383405" duration="2259000" />
+      <workItem from="1644897078365" duration="36000" />
+      <workItem from="1645082949198" duration="48000" />
+      <workItem from="1646030160916" duration="16000" />
+      <workItem from="1648536994588" duration="152000" />
+      <workItem from="1654499703900" duration="1665000" />
+      <workItem from="1660095062420" duration="355000" />
     </task>
+    <task id="LOCAL-00001" summary="初步完成，需要优化">
+      <created>1615802677568</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1615802677568</updated>
+    </task>
+    <task id="LOCAL-00002" summary="初步优化，需补充内蒙，海南的  身份证 省份前缀">
+      <created>1615889926864</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1615889926865</updated>
+    </task>
+    <task id="LOCAL-00003" summary="初步优化完成">
+      <created>1615947627689</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1615947627689</updated>
+    </task>
+    <task id="LOCAL-00004" summary="初步优化完成">
+      <created>1615947784294</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1615947784294</updated>
+    </task>
+    <task id="LOCAL-00005" summary="添加通过引入外部配置文件实现相关配置、添加environment参数实现自由切换环境配置、添加.gitignore文件">
+      <created>1615963536493</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1615963536493</updated>
+    </task>
+    <task id="LOCAL-00006" summary="username 修改为 userName">
+      <created>1615964841346</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615964841346</updated>
+    </task>
+    <task id="LOCAL-00007" summary="名字 消除 空格">
+      <created>1640050456923</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1640050456923</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="初步完成，需要优化" />
+    <MESSAGE value="初步优化，需补充内蒙，海南的  身份证 省份前缀" />
+    <MESSAGE value="初步优化完成" />
+    <MESSAGE value="添加通过引入外部配置文件实现相关配置、添加environment参数实现自由切换环境配置" />
+    <MESSAGE value="添加通过引入外部配置文件实现相关配置、添加environment参数实现自由切换环境配置、添加.gitignore文件" />
+    <MESSAGE value="username 修改为 userName" />
+    <MESSAGE value="名字 消除 空格" />
+    <option name="LAST_COMMIT_MESSAGE" value="名字 消除 空格" />
   </component>
 </project>

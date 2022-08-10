@@ -5,6 +5,8 @@ import com.bjb.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import java.util.Calendar;
+
 /**
  * @Description
  * @Author XJT
@@ -33,6 +35,13 @@ public class UserDaoTest {
         Integer num = userDao.addUser(u);
         System.out.println(num);
         sqlSession.close();
+    }
+
+    @Test
+    public void testGetYear() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        System.out.println(year);
     }
 
 }
